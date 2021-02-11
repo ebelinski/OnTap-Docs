@@ -25611,35 +25611,40 @@ extension UIApplicationDelegateAdaptor where DelegateType : ObservableObject {
     public var projectedValue: ObservedObject<DelegateType>.Wrapper { get }
 }
 
-/// A UIKit view controller that manages a SwiftUI view hierarchy.
+/// A UIKit view controller that is used for embedding a SwiftUI view in a
+/// UIKit view hierarchy.
 ///
-/// Create a `UIHostingController` object when you want to integrate SwiftUI
-/// views into a UIKit view hierarchy. At creation time, specify the SwiftUI
-/// view you want to use as the root view for this view controller; you can
-/// change that view later using the `SwiftUI/UIHostingController/rootView`
-/// property. Use the hosting controller like you would any other view
-/// controller, by presenting it or embedding it as a child view controller
-/// in your interface.
+/// A `UIHostingController` is used for integrating a SwiftUI view into a UIKit 
+/// view hierarchy. It's a good way to introduce SwiftUI code in an existing
+/// UIKit project. The hosting controller like you would any other view
+/// controller; it can be presented modally, pushed to a 
+/// `UINavigationController` stack, or embedded as a child view controller.
+///
+/// ```
+/// let exampleSwiftUIView = ExampleView()
+/// let hostingController = UIHostingController(rootView: exampleSwiftUIView)
+/// present(hostingController, animated: true, completion: nil)
+/// ```
 @available(iOS 13.0, tvOS 13.0, *)
 @available(macOS, unavailable)
 @available(watchOS, unavailable)
 open class UIHostingController<Content> : UIViewController where Content : View {
 
-	/// The key commands that trigger actions on this responder.
+	/// > The key commands that trigger actions on this responder.
 	///
-	/// A responder object that supports hardware keyboard commands can redefine
+	/// > A responder object that supports hardware keyboard commands can redefine
 	/// this property and use it to return an array of `UIKit/UIKeyCommand` objects that
 	/// it supports. Each key command object represents the keyboard sequence to
 	/// recognize and the action method of the responder to call in response.
 	///
-	/// The key commands you return from this method are applied to the entire
+	/// > The key commands you return from this method are applied to the entire
 	/// responder chain. When an key combination is pressed that matches a key
 	/// command object, UIKit walks the responder chain looking for an object
 	/// that implements the corresponding action method. It calls that method on
 	/// the first object it finds and then stops processing the event.
     @objc override dynamic open var keyCommands: [UIKeyCommand]? { get }
 
-    /// Creates a hosting controller object that wraps the specified SwiftUI
+    /// > Creates a hosting controller object that wraps the specified SwiftUI
     /// view.
     ///
     /// - Parameter rootView: The root view of the SwiftUI view hierarchy that
